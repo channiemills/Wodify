@@ -10,7 +10,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-global browser
 browser = webdriver.Chrome()
 
 browser.get('https://app.wodify.com/Performance/AthletePerformanceCardEntry.aspx')
@@ -22,7 +21,29 @@ password_field.send_keys(password)
 #submit
 browser.find_element_by_id('wt73_wtMainContent_wt59').click()
 
-time.sleep(2)
+#time.sleep(2)
+
+
+#writing a function to wait for elements
+
+#element = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen" )))
+
+def element_wait():
+    global browser
+
+    try:
+
+        element = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable((By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen"))
+        )
+    except NoSuchElementException:
+        browser.quit()
+    #
+    # finally:
+    #     browser.quit()
+
+
+element_wait()
 
 # print EC.presence_of_element_located((By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen'))
 #
