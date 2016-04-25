@@ -28,14 +28,19 @@ browser.find_element_by_id('wt73_wtMainContent_wt59').click()
 
 #element = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen" )))
 
-def element_wait():
+def element_wait(tag, element):
     global browser
 
     try:
 
-        element = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen"))
+        item = WebDriverWait(browser, 10).until(
+            #EC.element_to_be_clickable((By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen"))
+            EC.element_to_be_clickable((tag, element))
+
         )
+
+        return item
+
     except NoSuchElementException:
         browser.quit()
     #
@@ -43,7 +48,7 @@ def element_wait():
     #     browser.quit()
 
 
-element_wait()
+element_wait(By.ID, "W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen").click()
 
 # print EC.presence_of_element_located((By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen'))
 #
@@ -76,10 +81,10 @@ element_wait()
 
 #open athlete dropdown
 #athlete_dropdown = helper_function(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen')
-athlete_dropdown = browser.find_element_by_id('W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen')
+#athlete_dropdown = browser.find_element_by_id('W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen')
 
 #browser.find_element_by_id(athlete_dropdown).click()
-athlete_dropdown.click()
+#athlete_dropdown.click()
 #browser.find_element_by_id('W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen').click()
 
 
