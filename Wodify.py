@@ -1,42 +1,12 @@
 __author__ = 'cmiller'
 
 
-from selenium import webdriver
+#from selenium import webdriver
 from selenium.webdriver.support.ui import Select
-from Wodify_variables import username, password
 import time
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
+from Wodify_Functions import login, element_wait, browser
 
-
-browser = webdriver.Chrome()
-
-
-def login():
-    browser.get('https://app.wodify.com/Performance/AthletePerformanceCardEntry.aspx')
-    username_field = browser.find_element_by_name('wt73$wtMainContent$wtUserNameInput')
-    username_field.send_keys(username)
-    password_field = browser.find_element_by_name('wt73$wtMainContent$wtPasswordInput')
-    password_field.send_keys(password)
-    browser.find_element_by_id('wt73_wtMainContent_wt59').click()
-
-
-#writing a function to wait for elements
-def element_wait(tag, element):
-    global browser
-
-    try:
-
-        item = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable((tag, element))
-        )
-
-        return item
-
-    except TimeoutException:
-        browser.quit()
 
 login()
 
