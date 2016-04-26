@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException
 
 
 browser = webdriver.Chrome()
@@ -73,19 +74,48 @@ Select(type_dropdown).select_by_visible_text('Weightlifting')
 
 # the problem is that the element is clickable but there is nothing in it yet so it closes
 
+# def set_component():
+# # need a function to retry until components are fully loaded
+#     for attempt in range(10):
+#         try:
+#             #open component dropdown
+#             element_wait(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
+#             element = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
+#             #element = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
+#             input = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
+#             #input = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
+#             input.send_keys('Back Squat\n')
+#             break
+#         except AttributeError:
+#             pass
+#         # else:
+#         #     break
+#
+#
+# set_component()
+
+#verify measure text boxes are present before setting component
+
+element_wait(By.NAME, 'W_Theme_UI_wt19$block$wtMainContent$wtPCard$wt44')
+
 #open component dropdown
+
+
 element_wait(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
 #browser.find_element_by_id('W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
 
 #time.sleep(5)
 #print 'Did you wait?'
 
+
 #select movement
 #will need to iterate input over list of expected movements
+
+
 element = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
-#element = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
+# #element = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
 input = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
-#input = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
+# #input = browser.find_element_by_css_selector('#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
 input.send_keys('Back Squat\n')
 
 print 'Back Squat'
