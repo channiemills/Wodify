@@ -1,11 +1,10 @@
 __author__ = 'cmiller'
 
 
-#from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import time
 from selenium.webdriver.common.by import By
-from Wodify_Functions import login, element_wait, browser
+from Wodify_Functions import login, element_wait, browser, scores_wait
 
 get_max = 0
 max_value = 0
@@ -59,15 +58,13 @@ def set_components():
         input = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
         input.send_keys(i + '\n')
         print i
-        ### Get 1 Rep Max ###
-        time.sleep(.5)
+  ### Get 1 Rep Max ###
+        scores_wait(By.CLASS_NAME, 'highcharts-title', (i + ' History over Time'))
         get_max = element_wait(By.XPATH, '//*[@id="W_Theme_UI_wt19_block_wtMainContent_wtPCard_W_Performance_UI_wt18_block_wtPRWrapper"]/table/tbody/tr[2]/td[1]')
         max_value = get_max.text
         print max_value
 
-# with the debugger the correct measurements are grabbed, implying a page load issue. The get_max element is likely still present from the first value. Need to figure out how to get it to change
-#wait while loading is present?
-#verify text matches component, return component + '(1x1)'
+
 #need to add error handling if no performance history...
 
 set_components()

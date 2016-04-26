@@ -5,7 +5,6 @@ from Wodify_variables import username, password
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-#from Wodify import browser
 
 
 browser = webdriver.Chrome()
@@ -28,6 +27,21 @@ def element_wait(tag, element):
 
         item = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((tag, element))
+        )
+
+        return item
+
+    except TimeoutException:
+        browser.quit()
+
+
+def scores_wait(tag, element, component):
+    global browser
+
+    try:
+
+        item = WebDriverWait(browser, 10).until(
+            EC.text_to_be_present_in_element((tag, element), component)
         )
 
         return item
