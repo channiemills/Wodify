@@ -46,7 +46,8 @@ element_wait(By.NAME, 'W_Theme_UI_wt19$block$wtMainContent$wtPCard$wt44')
 ### Select Component ###
 #will need to iterate input over list of expected components
 
-components = ['Back Squat', 'Front Squat', 'Deadlift']
+component_file = open("movements", "r")
+components = [line.rstrip('\n') for line in component_file]
 
 
 def set_components():
@@ -54,7 +55,7 @@ def set_components():
     for i in components:
         #global get_max, max_value
         element_wait(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
-        element = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
+        #element = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
         input = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
         input.send_keys(i + '\n')
         print i
