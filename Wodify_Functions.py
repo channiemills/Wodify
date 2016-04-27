@@ -8,6 +8,7 @@ from selenium.common.exceptions import TimeoutException
 
 
 browser = webdriver.Chrome()
+no_data = 'Sorry, no performance history.'
 
 
 def login():
@@ -40,11 +41,12 @@ def scores_wait(tag, element, component):
 
     try:
 
-        item = WebDriverWait(browser, 10).until(
+        item = WebDriverWait(browser, 3).until(
             EC.text_to_be_present_in_element((tag, element), component)
         )
 
         return item
 
     except TimeoutException:
-        browser.quit()
+        if browser.find_element_by_id('W_Theme_UI_wt19_block_wtMainContent_wtPCard_W_Performance_UI_wt18_block_wtPerformanceResultsWrapper').text == no_data:
+            return None

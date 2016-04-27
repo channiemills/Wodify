@@ -21,7 +21,7 @@ browser.find_elements_by_class_name('active-result')[1].click()
 
 ### Print Athlete Name ###
 athlete_name = browser.find_element_by_xpath('//*[@id="W_Theme_UI_wt19_block_wtMainContent_wtAthleteDropDown_chosen"]/a/span')
-print athlete_name.text
+#print athlete_name.text
 #iterate over this list somehow
 #list = browser.find_elements_by_class_name('active-result')
 #print list
@@ -38,11 +38,6 @@ Select(type_dropdown).select_by_visible_text('Weightlifting')
 element_wait(By.NAME, 'W_Theme_UI_wt19$block$wtMainContent$wtPCard$wt44')
 
 
-### Open Component Dropdown ###
-
-#element_wait(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
-
-
 ### Select Component ###
 #will need to iterate input over list of expected components
 
@@ -51,22 +46,30 @@ components = [line.rstrip('\n') for line in component_file]
 
 
 def set_components():
-    global get_max, max_value
+    global get_max, max_value, athlete_name
+
+    scores = []
     for i in components:
-        #global get_max, max_value
         element_wait(By.ID, 'W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen').click()
-        #element = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > a > span')
         input = element_wait(By.CSS_SELECTOR, '#W_Theme_UI_wt19_block_wtMainContent_wtPCard_wtComponentDropDown_chosen > div > div > input[type="text"]')
         input.send_keys(i + '\n')
-        print i
+        #print i
   ### Get 1 Rep Max ###
-        scores_wait(By.CLASS_NAME, 'highcharts-title', (i + ' History over Time'))
-        get_max = element_wait(By.XPATH, '//*[@id="W_Theme_UI_wt19_block_wtMainContent_wtPCard_W_Performance_UI_wt18_block_wtPRWrapper"]/table/tbody/tr[2]/td[1]')
-        max_value = get_max.text
-        print max_value
+        if scores_wait(By.CLASS_NAME, 'highcharts-title', (i + ' History over Time')) == None:
+            #print 'N/A'
+            scores.append('N/A')
+        else:
+            scores_wait(By.CLASS_NAME, 'highcharts-title', (i + ' History over Time'))
+            get_max = element_wait(By.XPATH, '//*[@id="W_Theme_UI_wt19_block_wtMainContent_wtPCard_W_Performance_UI_wt18_block_wtPRWrapper"]/table/tbody/tr[2]/td[1]')
+            max_value = get_max.text.strip(' lbs')
+            #print max_value
+            scores.append(max_value)
+            performance = dict(zip(components, scores))
+            performance['Athlete'] = athlete_name.text
+    print performance
 
+#for data storage, i could write the maxes to a list then add athlete name to components and that array then create a dict?
 
-#need to add error handling if no performance history...
 
 set_components()
 
